@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>習慣トラッカー</title>
+  <style>
+    :root{
+      --bg1:#f7e6ef;
+      --bg2:#dff3f0;
+      --card:rgba(255,255,255,0.55);
+      --line:rgba(0,0,0,0.12);
+      --text:#2a2a2a;
+      --muted:rgba(0,0,0,0.55);
+      --accent:#ff6aa2;
+      --accent2:#5ec8ff;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 20%, var(--bg1), transparent 60%),
+        radial-gradient(1200px 600px at 85% 80%, var(--bg2), transparent 60%),
+        linear-gradient(135deg, #f8f3ff, #f2fff9);
+      min-height:100vh;
+    }
+    .wrap{
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 22px 16px 42px;
+    }
+
+    .hero{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 18px 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+    h1{
+      margin:0 0 8px;
+      font-size: 30px;
+      letter-spacing: .02em;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-weight: 600;
+    }
+
+    .panel{
+      margin-top: 16px;
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+    .grid{
+      display:grid;
+      gap:10px;
+    }
+    label{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-left: 6px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    @media (min-width: 560px){
+      .row{ grid-template-columns: 1.2fr 0.8fr; }
+    }
+    input{
+      width:100%;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      outline:none;
+      font-size: 16px;
+      font-family: inherit; /* 入力欄の雰囲気を維持 */
+    }
+    input::placeholder{ color: rgba(0,0,0,0.35); font-weight:600; }
+
+    .btn{
+      width:100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.6);
+      font-weight: 800;
+      font-size: 16px;
+      cursor:pointer;
+      font-family: inherit;
+    }
+    .btnPrimary{
+      background: linear-gradient(135deg, rgba(255,106,162,0.95), rgba(255,197,220,0.95));
+      border: 0;
+      color: white;
+      box-shadow: 0 12px 30px rgba(255,106,162,0.25);
+    }
+    .btnReset{
+      background: rgba(94,200,255,0.18);
+      color: #136a8a;
+      font-weight: 800;
+    }
+    .note{
+      margin: 10px 4px 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .sectionTitle{
+      margin: 18px 2px 10px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .list{
+      display:grid;
+      gap: 10px;
+    }
+
+    .yearHeader{
+      margin: 14px 2px 2px;
+      font-weight: 900;
+      color: rgba(0,0,0,0.7);
+      letter-spacing: .03em;
+    }
+
+    .habitItem{
+      background: rgba(255,255,255,0.55);
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* 1行：日付 / 習慣名 / ◯日目(◯か月◯日) / □削除 */
+    .habitRow{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    /* ★ 日付：黒・同サイズ・入力欄寄りの太さ */
+    .datePill{
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.45);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      min-width: 72px;
+      text-align:center;
+
+      color: #000;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    /* ★ 習慣名：入力欄っぽい見た目（太すぎない） */
+    .habitName{
+      flex:1;
+      min-width:0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      color:#000;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    /* ★ ◯日目：黒・同サイズ・入力欄寄りの太さ */
+    .dayCount{
+      white-space: nowrap;
+
+      color:#000;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .deleteSquare{
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.14);
+      background: rgba(255,255,255,0.6);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      font-weight: 900;
+      color: rgba(0,0,0,0.6);
+      font-family: inherit;
+    }
+    .deleteSquare:active{ transform: scale(0.98); }
+
+    .empty{
+      border: 2px dashed rgba(0,0,0,0.12);
+      border-radius: 18px;
+      padding: 18px 14px;
+      color: rgba(0,0,0,0.55);
+      font-weight: 800;
+      background: rgba(255,255,255,0.35);
+    }
+
+    .toast{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.06);
+      color: rgba(0,0,0,0.65);
+      font-weight: 700;
+      font-size: 13px;
+      display:none;
+    }
+    .toast.show{ display:block; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>習慣トラッカー</h1>
+      <p class="sub">今日もコツコツ、未来の自分に貯金 ✍️</p>
+    </div>
+
+    <div class="panel">
+      <div class="grid">
+        <div>
+          <label for="habitName">習慣名</label>
+          <input id="habitName" type="text" placeholder="例：ヨガ / 英語10分 / ストレッチ" />
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="startDate">開始日</label>
+            <input id="startDate" type="date" />
+          </div>
+          <div>
+            <label>&nbsp;</label>
+            <button id="addBtn" class="btn btnPrimary">追加</button>
+          </div>
+        </div>
+
+        <button id="resetBtn" class="btn btnReset">全データリセット</button>
+
+        <div class="note">※データはこの端末のブラウザに保存されます（localStorage）</div>
+        <div id="toast" class="toast"></div>
+      </div>
+    </div>
+
+    <div class="sectionTitle">一覧</div>
+    <div id="list" class="list"></div>
+  </div>
+
+  <script>
+    // ========= 設定 =========
+    const STORAGE_KEY = "habitTracker_v2";
+
+    // ========= ユーティリティ =========
+    const $ = (id) => document.getElementById(id);
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
+
+    function showToast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(()=>t.classList.remove("show"), 2200);
+    }
+
+    function toISODateString(d){
+      // YYYY-MM-DD
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,"0");
+      const day = String(d.getDate()).padStart(2,"0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function formatMD(dateLike){
+      const d = new Date(dateLike);
+      const m = d.getMonth()+1;
+      const day = d.getDate();
+      return `${m}/${day}`;     // m/d（ゼロ埋めなし）
+    }
+
+    function getYear(dateLike){
+      return new Date(dateLike).getFullYear();
+    }
+
+    function daysFromStart(dateLike){
+      const start = new Date(dateLike);
+      const today = new Date();
+      // 日付だけで計算（時刻のズレを無視）
+      const s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+      const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const diff = Math.floor((t - s) / 86400000) + 1; // 今日を1日目に含める
+      return diff;
+    }
+
+    // ★ 30日=1か月固定で (◯か月◯日) を作る
+    function monthDayFromStart(dateLike){
+      const d = daysFromStart(dateLike);       // 1日目スタート
+      const months = Math.floor((d - 1) / 30); // 30日=1か月固定
+      const days = ((d - 1) % 30) + 1;
+      return { months, days };
+    }
+
+    // ========= データ =========
+    function loadHabits(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return [];
+        const parsed = JSON.parse(raw);
+        if(!Array.isArray(parsed)) return [];
+        return parsed;
+      }catch{
+        return [];
+      }
+    }
+
+    function saveHabits(habits){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+    }
+
+    function makeId(){
+      return crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2);
+    }
+
+    // ========= 描画（年見出し自動挿入 + 1行UI + m/d表示） =========
+    function render(){
+      const listEl = $("list");
+      const habits = loadHabits();
+
+      listEl.innerHTML = "";
+
+      if(habits.length === 0){
+        listEl.innerHTML = `<div class="empty">まだ習慣がありません。ひとつ目を追加して、こっそり育てましょう🌱</div>`;
+        return;
+      }
+
+      // 並べ替え：開始日→習慣名
+      const sorted = [...habits].sort((a,b)=>{
+        const d = new Date(a.startDate) - new Date(b.startDate);
+        if(d !== 0) return d;
+        return String(a.name).localeCompare(String(b.name), "ja");
+      });
+
+      let currentYear = null;
+
+      for(const h of sorted){
+        const y = getYear(h.startDate);
+        if(y !== currentYear){
+          currentYear = y;
+          const yEl = document.createElement("div");
+          yEl.className = "yearHeader";
+          yEl.textContent = `${currentYear}年`;
+          listEl.appendChild(yEl);
+        }
+
+        const item = document.createElement("div");
+        item.className = "habitItem";
+
+        const d = daysFromStart(h.startDate);
+        const { months, days } = monthDayFromStart(h.startDate);
+
+        const dayText = d >= 1
+          ? `${d}日目 (${months}か月${days}日)`
+          : `未設定`;
+
+        item.innerHTML = `
+          <div class="habitRow">
+            <span class="datePill">${formatMD(h.startDate)}</span>
+            <span class="habitName">${escapeHtml(h.name)}</span>
+            <span class="dayCount">${dayText}</span>
+            <button class="deleteSquare" aria-label="削除" data-id="${h.id}">×</button>
+          </div>
+        `;
+
+        listEl.appendChild(item);
+      }
+
+      // 削除イベント
+      listEl.querySelectorAll(".deleteSquare").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const id = btn.dataset.id;
+          deleteHabit(id);
+        });
+      });
+    }
+
+    function addHabit(){
+      const name = $("habitName").value.trim();
+      const start = $("startDate").value;
+
+      if(!name){
+        showToast("習慣名を入れてね🙂");
+        return;
+      }
+      if(!start){
+        showToast("開始日を選んでね📅");
+        return;
+      }
+
+      // 未来日はNG
+      const todayISO = toISODateString(new Date());
+      if(start > todayISO){
+        showToast("未来日は不可です（今日以前にしてね）");
+        return;
+      }
+
+      const habits = loadHabits();
+      habits.push({ id: makeId(), name, startDate: start });
+      saveHabits(habits);
+
+      $("habitName").value = "";
+      // $("startDate").value = ""; // 開始日を残したいならこのままコメントアウトでOK
+
+      showToast("追加したよ✍️");
+      render();
+    }
+
+    function deleteHabit(id){
+      const habits = loadHabits();
+      const next = habits.filter(h => h.id !== id);
+      saveHabits(next);
+      showToast("削除したよ🧹");
+      render();
+    }
+
+    function resetAll(){
+      if(!confirm("全データをリセットします。よろしい？")){
+        return;
+      }
+      localStorage.removeItem(STORAGE_KEY);
+      showToast("リセット完了！");
+      render();
+    }
+
+    // ========= 初期化 =========
+    function init(){
+      $("addBtn").addEventListener("click", addHabit);
+      $("resetBtn").addEventListener("click", resetAll);
+
+      // Enterでも追加
+      $("habitName").addEventListener("keydown", (e)=>{
+        if(e.key === "Enter") addHabit();
+      });
+
+      render();
+    }
+
+    init();
+  </script>
+</body>
+</html>
