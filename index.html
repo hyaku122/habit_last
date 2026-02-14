@@ -14,11 +14,20 @@
       --muted:rgba(0,0,0,0.55);
       --accent:#ff6aa2;
       --accent2:#5ec8ff;
+
+      /* ★SF Pro JP “っぽさ”を最大化する並び（iOS/mac最優先） */
+      --ui-font: system-ui, -apple-system, "SF Pro JP", "SF Pro Display", "SF Pro Text",
+                 "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+                 "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
     }
-    *{ box-sizing:border-box; }
+
+    *{
+      box-sizing:border-box;
+      font-family: var(--ui-font);
+    }
+
     body{
       margin:0;
-      font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif;
       color:var(--text);
       background:
         radial-gradient(1200px 600px at 15% 20%, var(--bg1), transparent 60%),
@@ -26,6 +35,12 @@
         linear-gradient(135deg, #f8f3ff, #f2fff9);
       min-height:100vh;
     }
+
+    /* フォーム要素が勝手に別フォントになるのを防ぐ（Windowsで特に効く） */
+    input, button, select, textarea{
+      font: inherit;
+    }
+
     .wrap{
       max-width: 720px;
       margin: 0 auto;
@@ -44,11 +59,12 @@
       margin:0 0 8px;
       font-size: 30px;
       letter-spacing: .02em;
+      font-weight: 800;
     }
     .sub{
       margin:0;
       color:var(--muted);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .panel{
@@ -86,7 +102,7 @@
       background: rgba(255,255,255,0.7);
       outline:none;
       font-size: 16px;
-      font-family: inherit; /* 入力欄の雰囲気を維持 */
+      font-weight: 600;
     }
     input::placeholder{ color: rgba(0,0,0,0.35); font-weight:600; }
 
@@ -99,7 +115,6 @@
       font-weight: 800;
       font-size: 16px;
       cursor:pointer;
-      font-family: inherit;
     }
     .btnPrimary{
       background: linear-gradient(135deg, rgba(255,106,162,0.95), rgba(255,197,220,0.95));
@@ -117,6 +132,7 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.5;
+      font-weight: 600;
     }
 
     .sectionTitle{
@@ -145,14 +161,13 @@
       backdrop-filter: blur(10px);
     }
 
-    /* 1行：日付 / 習慣名 / ◯日目(◯か月◯日) / □削除 */
     .habitRow{
       display:flex;
       align-items:center;
       gap: 10px;
     }
 
-    /* ★ 日付：黒・同サイズ・入力欄寄りの太さ */
+    /* ★日付も黒・同サイズ・同フォント */
     .datePill{
       padding: 7px 10px;
       border-radius: 999px;
@@ -162,29 +177,26 @@
       white-space: nowrap;
       min-width: 72px;
       text-align:center;
-
       color: #000;
       font-size: 18px;
       font-weight: 700;
     }
 
-    /* ★ 習慣名：入力欄っぽい見た目（太すぎない） */
+    /* ★一覧の習慣名も同フォント */
     .habitName{
       flex:1;
       min-width:0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-
       color:#000;
       font-size: 18px;
       font-weight: 700;
     }
 
-    /* ★ ◯日目：黒・同サイズ・入力欄寄りの太さ */
+    /* ★日数表示も同フォント */
     .dayCount{
       white-space: nowrap;
-
       color:#000;
       font-size: 18px;
       font-weight: 700;
@@ -201,7 +213,6 @@
       cursor: pointer;
       font-weight: 900;
       color: rgba(0,0,0,0.6);
-      font-family: inherit;
     }
     .deleteSquare:active{ transform: scale(0.98); }
 
@@ -264,10 +275,7 @@
   </div>
 
   <script>
-    // ========= 設定 =========
     const STORAGE_KEY = "habitTracker_v2";
-
-    // ========= ユーティリティ =========
     const $ = (id) => document.getElementById(id);
 
     function escapeHtml(str){
@@ -288,7 +296,6 @@
     }
 
     function toISODateString(d){
-      // YYYY-MM-DD
       const y = d.getFullYear();
       const m = String(d.getMonth()+1).padStart(2,"0");
       const day = String(d.getDate()).padStart(2,"0");
@@ -299,7 +306,7 @@
       const d = new Date(dateLike);
       const m = d.getMonth()+1;
       const day = d.getDate();
-      return `${m}/${day}`;     // m/d（ゼロ埋めなし）
+      return `${m}/${day}`;
     }
 
     function getYear(dateLike){
@@ -309,29 +316,25 @@
     function daysFromStart(dateLike){
       const start = new Date(dateLike);
       const today = new Date();
-      // 日付だけで計算（時刻のズレを無視）
       const s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
       const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      const diff = Math.floor((t - s) / 86400000) + 1; // 今日を1日目に含める
-      return diff;
+      return Math.floor((t - s) / 86400000) + 1;
     }
 
-    // ★ 30日=1か月固定で (◯か月◯日) を作る
+    // 30日=1か月固定
     function monthDayFromStart(dateLike){
-      const d = daysFromStart(dateLike);       // 1日目スタート
-      const months = Math.floor((d - 1) / 30); // 30日=1か月固定
+      const d = daysFromStart(dateLike);
+      const months = Math.floor((d - 1) / 30);
       const days = ((d - 1) % 30) + 1;
       return { months, days };
     }
 
-    // ========= データ =========
     function loadHabits(){
       try{
         const raw = localStorage.getItem(STORAGE_KEY);
         if(!raw) return [];
         const parsed = JSON.parse(raw);
-        if(!Array.isArray(parsed)) return [];
-        return parsed;
+        return Array.isArray(parsed) ? parsed : [];
       }catch{
         return [];
       }
@@ -345,11 +348,9 @@
       return crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2);
     }
 
-    // ========= 描画（年見出し自動挿入 + 1行UI + m/d表示） =========
     function render(){
       const listEl = $("list");
       const habits = loadHabits();
-
       listEl.innerHTML = "";
 
       if(habits.length === 0){
@@ -357,7 +358,6 @@
         return;
       }
 
-      // 並べ替え：開始日→習慣名
       const sorted = [...habits].sort((a,b)=>{
         const d = new Date(a.startDate) - new Date(b.startDate);
         if(d !== 0) return d;
@@ -382,9 +382,7 @@
         const d = daysFromStart(h.startDate);
         const { months, days } = monthDayFromStart(h.startDate);
 
-        const dayText = d >= 1
-          ? `${d}日目 (${months}か月${days}日)`
-          : `未設定`;
+        const dayText = d >= 1 ? `${d}日目 (${months}か月${days}日)` : `未設定`;
 
         item.innerHTML = `
           <div class="habitRow">
@@ -398,7 +396,6 @@
         listEl.appendChild(item);
       }
 
-      // 削除イベント
       listEl.querySelectorAll(".deleteSquare").forEach(btn=>{
         btn.addEventListener("click", ()=>{
           const id = btn.dataset.id;
@@ -411,60 +408,39 @@
       const name = $("habitName").value.trim();
       const start = $("startDate").value;
 
-      if(!name){
-        showToast("習慣名を入れてね🙂");
-        return;
-      }
-      if(!start){
-        showToast("開始日を選んでね📅");
-        return;
-      }
+      if(!name){ showToast("習慣名を入れてね🙂"); return; }
+      if(!start){ showToast("開始日を選んでね📅"); return; }
 
-      // 未来日はNG
       const todayISO = toISODateString(new Date());
-      if(start > todayISO){
-        showToast("未来日は不可です（今日以前にしてね）");
-        return;
-      }
+      if(start > todayISO){ showToast("未来日は不可です（今日以前にしてね）"); return; }
 
       const habits = loadHabits();
       habits.push({ id: makeId(), name, startDate: start });
       saveHabits(habits);
 
       $("habitName").value = "";
-      // $("startDate").value = ""; // 開始日を残したいならこのままコメントアウトでOK
-
       showToast("追加したよ✍️");
       render();
     }
 
     function deleteHabit(id){
       const habits = loadHabits();
-      const next = habits.filter(h => h.id !== id);
-      saveHabits(next);
+      saveHabits(habits.filter(h => h.id !== id));
       showToast("削除したよ🧹");
       render();
     }
 
     function resetAll(){
-      if(!confirm("全データをリセットします。よろしい？")){
-        return;
-      }
+      if(!confirm("全データをリセットします。よろしい？")) return;
       localStorage.removeItem(STORAGE_KEY);
       showToast("リセット完了！");
       render();
     }
 
-    // ========= 初期化 =========
     function init(){
       $("addBtn").addEventListener("click", addHabit);
       $("resetBtn").addEventListener("click", resetAll);
-
-      // Enterでも追加
-      $("habitName").addEventListener("keydown", (e)=>{
-        if(e.key === "Enter") addHabit();
-      });
-
+      $("habitName").addEventListener("keydown", (e)=>{ if(e.key === "Enter") addHabit(); });
       render();
     }
 
