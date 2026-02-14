@@ -204,6 +204,7 @@
   width: 160px;                 
   text-align: left;             
   font-variant-numeric: tabular-nums;
+  color: #2e8b57
     }
 
     .deleteSquare{
@@ -386,7 +387,7 @@
         const d = daysFromStart(h.startDate);
         const { months, days } = monthDayFromStart(h.startDate);
 
-        const dayText = d >= 1 ? `${d}日目 (${months}か月${days}日)` : `未設定`;
+        const dayText = d >= 1 ? `${d}日目 (${months}ヶ月${days}日)` : `未設定`;
 
         item.innerHTML = `
           <div class="habitRow">
