@@ -246,6 +246,33 @@
       flex: 0 0 auto;
     }
 
+    .datePillButton{
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dateEditor{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+      z-index: 2;
+    }
+
+    .dateEditor::-webkit-calendar-picker-indicator{
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      cursor: pointer;
+    }
+
     .habitName{
       min-width:0;
       white-space: nowrap;
@@ -801,7 +828,16 @@
 
         item.innerHTML = `
           <div class="habitRow">
-            <span class="datePill">${formatMD(h.startDate)}</span>
+            <label class="datePillButton" aria-label="開始日を変更">
+              <span class="datePill">${formatMD(h.startDate)}</span>
+              <input
+                class="dateEditor"
+                type="date"
+                value="${escapeHtml(h.startDate)}"
+                data-id="${escapeHtml(h.id)}"
+                aria-label="開始日を選択"
+              />
+            </label>
             <span class="habitName">${escapeHtml(h.name)}</span>
             <span class="dayCount">${dayText}</span>
             <button class="deleteSquare" aria-label="削除" data-id="${h.id}">×</button>
@@ -815,6 +851,12 @@
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
           deleteHabit(id);
+        });
+      });
+
+      listEl.querySelectorAll(".dateEditor").forEach((input) => {
+        input.addEventListener("change", () => {
+          updateHabitStartDate(input.dataset.id, input.value);
         });
       });
     }
@@ -852,6 +894,26 @@
       const habits = loadHabits();
       saveHabits(habits.filter((h) => h.id !== id));
       showToast("削除しました");
+      render();
+    }
+
+    function updateHabitStartDate(id, startDate){
+      if(!id || !startDate) return;
+
+      const todayISO = toISODateString(new Date());
+      if(startDate > todayISO){
+        showToast("未来日は指定できません。開始日を確認してください。");
+        render();
+        return;
+      }
+
+      const habits = loadHabits();
+      const idx = habits.findIndex((h) => h.id === id);
+      if(idx < 0) return;
+
+      habits[idx] = { ...habits[idx], startDate };
+      saveHabits(habits);
+      showToast("開始日を更新しました");
       render();
     }
 
