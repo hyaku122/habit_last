@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
@@ -12,27 +12,21 @@
       --line:rgba(0,0,0,0.12);
       --text:#2a2a2a;
       --muted:rgba(0,0,0,0.55);
-      --accent:#ff6aa2;
-      --accent2:#5ec8ff;
-
-      /* ★SF Pro JP “っぽさ”を最大化する並び（iOS/mac最優先） */
-      --ui-font: system-ui, -apple-system, "SF Pro JP", "SF Pro Display", "SF Pro Text",
-                 "Hiragino Sans", "Hiragino Kaku Gothic ProN",
-                 "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
     }
 
     *{
       box-sizing:border-box;
-      font-family:  "Hiragino Maru Gothic ProN",
-    "Hiragino Maru Gothic Pro",
-    "Hiragino Sans",
-    "Yu Gothic",
-    "Meiryo",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    sans-serif;
-    ｝
+      font-family:
+        "Hiragino Maru Gothic ProN",
+        "Hiragino Maru Gothic Pro",
+        "Hiragino Sans",
+        "Yu Gothic",
+        "Meiryo",
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        sans-serif;
+    }
 
     body{
       margin:0;
@@ -42,17 +36,58 @@
         radial-gradient(1200px 600px at 85% 80%, var(--bg2), transparent 60%),
         linear-gradient(135deg, #f8f3ff, #f2fff9);
       min-height:100vh;
+      overflow-x:hidden;
     }
 
-    /* フォーム要素が勝手に別フォントになるのを防ぐ（Windowsで特に効く） */
     input, button, select, textarea{
       font: inherit;
     }
 
     .wrap{
-      max-width: 720px;
+      width:min(100%, 720px);
       margin: 0 auto;
-      padding: 22px 16px 42px;
+      padding: 14px 16px 42px;
+    }
+
+    .topActions{
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      gap:8px;
+      margin-bottom: 10px;
+    }
+
+    .iconBtn{
+      width:44px;
+      height:44px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      font-size: 22px;
+      cursor:pointer;
+      line-height: 1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex: 0 0 auto;
+    }
+
+    .refreshBtn{
+      width:auto;
+      max-width: min(100%, 260px);
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(18,112,145,0.22);
+      background: linear-gradient(135deg, rgba(168,231,255,0.75), rgba(214,250,255,0.9));
+      color:#0f5978;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.25;
+      text-align:left;
+      cursor:pointer;
+      box-shadow: 0 8px 20px rgba(15,89,120,0.12);
+      flex: 0 1 auto;
     }
 
     .hero{
@@ -63,12 +98,14 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 40px rgba(0,0,0,0.06);
     }
+
     h1{
       margin:0 0 8px;
       font-size: 30px;
       letter-spacing: .02em;
       font-weight: 800;
     }
+
     .sub{
       margin:0;
       color:var(--muted);
@@ -84,24 +121,29 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 40px rgba(0,0,0,0.06);
     }
+
     .grid{
       display:grid;
       gap:10px;
     }
+
     label{
       font-size: 12px;
       color: var(--muted);
       font-weight: 700;
       margin-left: 6px;
     }
+
     .row{
       display:grid;
       grid-template-columns: 1fr;
       gap:10px;
     }
+
     @media (min-width: 560px){
       .row{ grid-template-columns: 1.2fr 0.8fr; }
     }
+
     input{
       width:100%;
       padding: 14px 14px;
@@ -112,7 +154,11 @@
       font-size: 16px;
       font-weight: 600;
     }
-    input::placeholder{ color: rgba(0,0,0,0.35); font-weight:600; }
+
+    input::placeholder{
+      color: rgba(0,0,0,0.35);
+      font-weight:600;
+    }
 
     .btn{
       width:100%;
@@ -124,17 +170,20 @@
       font-size: 16px;
       cursor:pointer;
     }
+
     .btnPrimary{
       background: linear-gradient(135deg, rgba(255,106,162,0.95), rgba(255,197,220,0.95));
       border: 0;
       color: white;
       box-shadow: 0 12px 30px rgba(255,106,162,0.25);
     }
+
     .btnReset{
       background: rgba(94,200,255,0.18);
       color: #136a8a;
       font-weight: 800;
     }
+
     .note{
       margin: 10px 4px 0;
       color: var(--muted);
@@ -176,9 +225,9 @@
       display:flex;
       align-items:center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
-    /* ★日付も黒・同サイズ・同フォント */
     .datePill{
       padding: 7px 10px;
       border-radius: 999px;
@@ -191,11 +240,11 @@
       color: #e68e00;
       font-size: 18px;
       font-weight: 700;
+      flex: 0 0 auto;
     }
 
-    /* ★一覧の習慣名も同フォント */
     .habitName{
-      flex:1;
+      flex:1 1 120px;
       min-width:0;
       white-space: nowrap;
       overflow: hidden;
@@ -205,17 +254,16 @@
       font-weight: 700;
     }
 
-    /* ★日数表示も同フォント */
     .dayCount{
+      width: 180px;
+      max-width: 100%;
+      text-align: left;
       white-space: nowrap;
-      color:#000;
+      font-variant-numeric: tabular-nums;
+      color: #1445cb;
       font-size: 18px;
       font-weight: 700;
-       /* ここから追加（左端そろえ） */
-  width: 180px;                 
-  text-align: left;             
-  font-variant-numeric: tabular-nums;
-  color: #1445cb
+      flex: 1 1 150px;
     }
 
     .deleteSquare{
@@ -229,12 +277,15 @@
       cursor: pointer;
       font-weight: 900;
       color: rgba(73, 17, 17, 0.6);
+      flex: 0 0 auto;
     }
-    .deleteSquare:active{ transform: scale(0.98); }
+
+    .deleteSquare:active{
+      transform: scale(0.98);
+    }
 
     .empty{
       border: 2px dashed rgba(0,0,0,0.12);
-      background: #fff4b8;
       border-radius: 18px;
       padding: 18px 14px;
       color: rgba(0,0,0,0.55);
@@ -252,21 +303,133 @@
       font-size: 13px;
       display:none;
     }
-    .toast.show{ display:block; }
+
+    .toast.show{
+      display:block;
+    }
+
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(26, 20, 43, 0.35);
+      z-index: 1000;
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modalCard{
+      width:min(100%, 520px);
+      background: rgba(255,255,255,0.95);
+      border:1px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+
+    .modalTitle{
+      margin:0;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .modalClose{
+      width:38px;
+      height:38px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      font-size:22px;
+      line-height:1;
+      cursor:pointer;
+    }
+
+    .modalNote{
+      margin: 8px 4px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .backupText{
+      width:100%;
+      min-height: 130px;
+      max-height: 300px;
+      padding: 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.82);
+      resize: vertical;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .modalActions{
+      display:grid;
+      gap:8px;
+      margin-top: 10px;
+    }
+
+    .btnBackupCreate{
+      background: linear-gradient(135deg, rgba(255,210,128,0.92), rgba(255,238,174,0.92));
+      border: 1px solid rgba(219,171,84,0.4);
+      color:#8a5300;
+    }
+
+    .btnBackupRestore{
+      background: linear-gradient(135deg, rgba(174,231,202,0.95), rgba(222,255,238,0.95));
+      border: 1px solid rgba(102,173,134,0.45);
+      color:#1d6c47;
+    }
+
+    @media (max-width: 430px){
+      .wrap{
+        padding: 12px 10px 32px;
+      }
+
+      .refreshBtn{
+        max-width: 220px;
+        font-size: 12px;
+      }
+
+      .dayCount{
+        width:auto;
+        flex-basis: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <div class="topActions">
+      <button id="settingsBtn" class="iconBtn" type="button" aria-label="バックアップ設定を開く">⚙️</button>
+      <button id="refreshBtn" class="refreshBtn" type="button" aria-label="最新版に更新（キャッシュ削除）">🔄 最新版に更新（キャッシュ削除）</button>
+    </div>
+
     <div class="hero">
       <h1>習慣トラッカー</h1>
-      <p class="sub">今日もコツコツ、未来の自分に貯金 ✍️</p>
+      <p class="sub">開始日からの継続日数を記録するシンプルなアプリ</p>
     </div>
 
     <div class="panel">
       <div class="grid">
         <div>
           <label for="habitName">習慣名</label>
-          <input id="habitName" type="text" placeholder="例：ヨガ / 英語10分 / ストレッチ" />
+          <input id="habitName" type="text" placeholder="例: ヨガ / 読書30分 / ストレッチ" />
         </div>
 
         <div class="row">
@@ -276,13 +439,13 @@
           </div>
           <div>
             <label>&nbsp;</label>
-            <button id="addBtn" class="btn btnPrimary">追加</button>
+            <button id="addBtn" class="btn btnPrimary" type="button">追加</button>
           </div>
         </div>
 
-        <button id="resetBtn" class="btn btnReset">全データリセット</button>
+        <button id="resetBtn" class="btn btnReset" type="button">全データリセット</button>
 
-        <div class="note">※データはこの端末のブラウザに保存されます（localStorage）</div>
+        <div class="note">データはこの端末のブラウザに保存されます（localStorage）。</div>
         <div id="toast" class="toast"></div>
       </div>
     </div>
@@ -291,8 +454,25 @@
     <div id="list" class="list"></div>
   </div>
 
+  <div id="backupModal" class="modal" aria-hidden="true">
+    <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="backupTitle">
+      <div class="modalHead">
+        <h2 id="backupTitle" class="modalTitle">バックアップと復元</h2>
+        <button id="closeModalBtn" class="modalClose" type="button" aria-label="閉じる">×</button>
+      </div>
+      <p class="modalNote">バックアップ文字列をメモアプリなどに保存しておくと、端末変更時に復元できます。</p>
+      <label for="backupText">バックアップ文字列</label>
+      <textarea id="backupText" class="backupText" placeholder="バックアップ文字列を作成するとここに表示されます。復元時はここに貼り付けてください。"></textarea>
+      <div class="modalActions">
+        <button id="createBackupBtn" class="btn btnBackupCreate" type="button">バックアップ文字列を作成</button>
+        <button id="restoreBackupBtn" class="btn btnBackupRestore" type="button">バックアップ文字列を復元</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const STORAGE_KEY = "habitTracker_v2";
+    const LEGACY_STORAGE_KEYS = ["habitTracker_v1", "habitTracker"];
     const $ = (id) => document.getElementById(id);
 
     function escapeHtml(str){
@@ -309,19 +489,19 @@
       t.textContent = msg;
       t.classList.add("show");
       clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(()=>t.classList.remove("show"), 2200);
+      showToast._timer = setTimeout(() => t.classList.remove("show"), 2200);
     }
 
     function toISODateString(d){
       const y = d.getFullYear();
-      const m = String(d.getMonth()+1).padStart(2,"0");
-      const day = String(d.getDate()).padStart(2,"0");
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
       return `${y}-${m}-${day}`;
     }
 
     function formatMD(dateLike){
       const d = new Date(dateLike);
-      const m = d.getMonth()+1;
+      const m = d.getMonth() + 1;
       const day = d.getDate();
       return `${m}/${day}`;
     }
@@ -338,12 +518,32 @@
       return Math.floor((t - s) / 86400000) + 1;
     }
 
-    // 30日=1か月固定
+    // 30日を1か月として概算表示
     function monthDayFromStart(dateLike){
       const d = daysFromStart(dateLike);
       const months = Math.floor((d - 1) / 30);
       const days = ((d - 1) % 30) + 1;
       return { months, days };
+    }
+
+    function migrateLegacyData(){
+      const currentRaw = localStorage.getItem(STORAGE_KEY);
+      if(currentRaw !== null) return;
+
+      for(const key of LEGACY_STORAGE_KEYS){
+        const raw = localStorage.getItem(key);
+        if(!raw) continue;
+
+        try{
+          const parsed = JSON.parse(raw);
+          if(Array.isArray(parsed)){
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+            return;
+          }
+        }catch{
+          // 古いデータ形式が壊れていた場合はスキップ
+        }
+      }
     }
 
     function loadHabits(){
@@ -362,7 +562,155 @@
     }
 
     function makeId(){
-      return crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2);
+      if(typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"){
+        return crypto.randomUUID();
+      }
+      return `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    }
+
+    function getAppStorageKeys(){
+      const keys = new Set([STORAGE_KEY]);
+
+      for(const legacyKey of LEGACY_STORAGE_KEYS){
+        if(localStorage.getItem(legacyKey) !== null) keys.add(legacyKey);
+      }
+
+      for(let i = 0; i < localStorage.length; i++){
+        const key = localStorage.key(i);
+        if(!key) continue;
+        if(key === STORAGE_KEY || key.startsWith("habitTracker_")){
+          keys.add(key);
+        }
+      }
+
+      return [...keys];
+    }
+
+    function utf8ToBase64(text){
+      const bytes = new TextEncoder().encode(text);
+      let binary = "";
+      for(const b of bytes){
+        binary += String.fromCharCode(b);
+      }
+      return btoa(binary);
+    }
+
+    function base64ToUtf8(base64){
+      const binary = atob(base64);
+      const bytes = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function openBackupModal(){
+      const modal = $("backupModal");
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeBackupModal(){
+      const modal = $("backupModal");
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function createBackupString(){
+      const keys = getAppStorageKeys();
+      const entries = {};
+
+      for(const key of keys){
+        const value = localStorage.getItem(key);
+        if(value !== null) entries[key] = value;
+      }
+
+      if(Object.keys(entries).length === 0){
+        entries[STORAGE_KEY] = JSON.stringify([]);
+      }
+
+      const payload = {
+        version: 1,
+        app: "habit_last",
+        savedAt: new Date().toISOString(),
+        entries
+      };
+
+      const encoded = utf8ToBase64(JSON.stringify(payload));
+      const textArea = $("backupText");
+      textArea.value = encoded;
+      textArea.focus();
+      textArea.select();
+
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(encoded).catch(() => {
+          // iOS SafariではクリップボードAPIが拒否されることがあるため、選択状態にするだけにする
+        });
+      }
+
+      showToast("バックアップ文字列を作成しました");
+    }
+
+    function restoreBackupString(){
+      const text = $("backupText").value.trim();
+      if(!text){
+        alert("バックアップ文字列を入力してください。");
+        return;
+      }
+
+      if(!confirm("バックアップ文字列から復元します。現在のデータは上書きされます。よろしいですか？")) return;
+
+      try{
+        const decoded = base64ToUtf8(text);
+        const payload = JSON.parse(decoded);
+
+        if(!payload || typeof payload !== "object" || typeof payload.entries !== "object"){
+          throw new Error("バックアップ形式が正しくありません。");
+        }
+
+        const targetKeys = new Set([...getAppStorageKeys(), ...Object.keys(payload.entries)]);
+        for(const key of targetKeys){
+          if(key === STORAGE_KEY || key.startsWith("habitTracker_") || LEGACY_STORAGE_KEYS.includes(key)){
+            localStorage.removeItem(key);
+          }
+        }
+
+        for(const [key, value] of Object.entries(payload.entries)){
+          if(!(key === STORAGE_KEY || key.startsWith("habitTracker_") || LEGACY_STORAGE_KEYS.includes(key))) continue;
+          if(typeof value !== "string"){
+            throw new Error(`キー ${key} の値が不正です。`);
+          }
+          localStorage.setItem(key, value);
+        }
+
+        migrateLegacyData();
+        render();
+        closeBackupModal();
+        alert("バックアップから復元しました。");
+      }catch(error){
+        alert(`復元に失敗しました。文字列を確認してください。\n${error.message || "不明なエラー"}`);
+      }
+    }
+
+    async function refreshLatestWithCacheClear(){
+      const ok = confirm("キャッシュを削除して最新版を読み込みます。入力データは消えません。実行しますか？");
+      if(!ok) return;
+
+      try{
+        // iOS Safari/PWAでは対応APIが環境差で使えないことがあるため、使える処理だけ実行する
+        if("serviceWorker" in navigator){
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map((reg) => reg.unregister()));
+        }
+
+        if("caches" in window){
+          const cacheKeys = await caches.keys();
+          await Promise.all(cacheKeys.map((key) => caches.delete(key)));
+        }
+
+        alert("キャッシュを削除しました。最新版を読み込みます。");
+        location.reload();
+      }catch(error){
+        console.error(error);
+        alert("キャッシュ削除中にエラーが発生しました。Safariを再起動して再度お試しください。");
+      }
     }
 
     function render(){
@@ -371,11 +719,11 @@
       listEl.innerHTML = "";
 
       if(habits.length === 0){
-        listEl.innerHTML = `<div class="empty">まだ習慣がありません。ひとつ目を追加して、こっそり育てましょう🌱</div>`;
+        listEl.innerHTML = "<div class=\"empty\">まだ習慣がありません。上のフォームから追加して、継続を育てましょう。</div>";
         return;
       }
 
-      const sorted = [...habits].sort((a,b)=>{
+      const sorted = [...habits].sort((a, b) => {
         const d = new Date(a.startDate) - new Date(b.startDate);
         if(d !== 0) return d;
         return String(a.name).localeCompare(String(b.name), "ja");
@@ -398,8 +746,7 @@
 
         const d = daysFromStart(h.startDate);
         const { months, days } = monthDayFromStart(h.startDate);
-
-        const dayText = d >= 1 ? `${d}日目 (${months}ヶ月${days}日)` : `未設定`;
+        const dayText = d >= 1 ? `${d}日目 (${months}か月 ${days}日)` : "未開始";
 
         item.innerHTML = `
           <div class="habitRow">
@@ -413,8 +760,8 @@
         listEl.appendChild(item);
       }
 
-      listEl.querySelectorAll(".deleteSquare").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
+      listEl.querySelectorAll(".deleteSquare").forEach((btn) => {
+        btn.addEventListener("click", () => {
           const id = btn.dataset.id;
           deleteHabit(id);
         });
@@ -425,39 +772,71 @@
       const name = $("habitName").value.trim();
       const start = $("startDate").value;
 
-      if(!name){ showToast("習慣名を入れてね🙂"); return; }
-      if(!start){ showToast("開始日を選んでね📅"); return; }
+      if(!name){
+        showToast("習慣名を入力してください");
+        return;
+      }
+      if(!start){
+        showToast("開始日を選択してください");
+        return;
+      }
 
       const todayISO = toISODateString(new Date());
-      if(start > todayISO){ showToast("未来日は不可です（今日以前にしてね）"); return; }
+      if(start > todayISO){
+        showToast("未来日は指定できません。開始日を確認してください。");
+        return;
+      }
 
       const habits = loadHabits();
       habits.push({ id: makeId(), name, startDate: start });
       saveHabits(habits);
 
       $("habitName").value = "";
-      showToast("追加したよ✍️");
+      showToast("追加しました");
       render();
     }
 
     function deleteHabit(id){
       const habits = loadHabits();
-      saveHabits(habits.filter(h => h.id !== id));
-      showToast("削除したよ🧹");
+      saveHabits(habits.filter((h) => h.id !== id));
+      showToast("削除しました");
       render();
     }
 
     function resetAll(){
-      if(!confirm("全データをリセットします。よろしい？")) return;
+      if(!confirm("全データをリセットします。よろしいですか？")) return;
       localStorage.removeItem(STORAGE_KEY);
-      showToast("リセット完了！");
+      showToast("リセットしました");
       render();
     }
 
     function init(){
+      migrateLegacyData();
+
       $("addBtn").addEventListener("click", addHabit);
       $("resetBtn").addEventListener("click", resetAll);
-      $("habitName").addEventListener("keydown", (e)=>{ if(e.key === "Enter") addHabit(); });
+      $("refreshBtn").addEventListener("click", refreshLatestWithCacheClear);
+      $("settingsBtn").addEventListener("click", openBackupModal);
+      $("closeModalBtn").addEventListener("click", closeBackupModal);
+      $("createBackupBtn").addEventListener("click", createBackupString);
+      $("restoreBackupBtn").addEventListener("click", restoreBackupString);
+
+      $("habitName").addEventListener("keydown", (e) => {
+        if(e.key === "Enter") addHabit();
+      });
+
+      $("backupModal").addEventListener("click", (e) => {
+        if(e.target.id === "backupModal") closeBackupModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if(e.key === "Escape") closeBackupModal();
+      });
+
+      if(!$("startDate").value){
+        $("startDate").value = toISODateString(new Date());
+      }
+
       render();
     }
 
