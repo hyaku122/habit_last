@@ -195,15 +195,10 @@
       font-weight: 600;
     }
 
-    .sectionTitle{
-      margin: 18px 2px 10px;
-      font-size: 18px;
-      font-weight: 900;
-    }
-
     .list{
       display:grid;
       gap: 10px;
+      margin-top: 14px;
     }
 
     .yearHeader{
@@ -226,7 +221,7 @@
 
     .habitRow{
       display:grid;
-      grid-template-columns: auto minmax(0, 1fr) auto auto;
+      grid-template-columns: auto minmax(0, 1fr) 152px 32px;
       align-items:center;
       gap: 8px;
     }
@@ -286,9 +281,9 @@
     .dayCount{
       display:inline-flex;
       align-items:baseline;
-      justify-content:flex-end;
+      justify-content:flex-start;
       gap: 2px;
-      text-align: right;
+      width: 100%;
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
       color: #1445cb;
@@ -459,6 +454,7 @@
       }
 
       .habitRow{
+        grid-template-columns: auto minmax(0, 1fr) 128px 30px;
         gap: 6px;
       }
 
@@ -502,7 +498,6 @@
       <p class="sub">小さく始めて未来を育てる 🍃✨</p>
     </div>
 
-    <div class="sectionTitle">一覧</div>
     <div id="list" class="list"></div>
     <div id="toast" class="toast"></div>
   </div>
