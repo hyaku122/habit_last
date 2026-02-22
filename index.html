@@ -284,12 +284,27 @@
     }
 
     .dayCount{
+      display:inline-flex;
+      align-items:baseline;
+      justify-content:flex-end;
+      gap: 2px;
       text-align: right;
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
       color: #1445cb;
       font-size: 15px;
       font-weight: 700;
+    }
+
+    .dayCountNum{
+      display:inline-block;
+      width: 4ch;
+      text-align:right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .dayCountLabel{
+      display:inline-block;
     }
 
     .deleteSquare{
@@ -459,6 +474,10 @@
 
       .dayCount{
         font-size: 13px;
+      }
+
+      .dayCountNum{
+        width: 3ch;
       }
 
       .deleteSquare{
@@ -824,7 +843,9 @@
 
         const d = daysFromStart(h.startDate);
         const { months, days } = monthDayFromStart(h.startDate);
-        const dayText = d >= 1 ? `${d}日目(${months}か月${days}日)` : "未開始";
+        const dayText = d >= 1
+          ? `<span class="dayCountNum">${d}</span><span class="dayCountLabel">日目(${months}ヶ月${days}日)</span>`
+          : `<span class="dayCountLabel">未開始</span>`;
 
         item.innerHTML = `
           <div class="habitRow">
