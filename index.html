@@ -49,12 +49,19 @@
       padding: 14px 16px 42px;
     }
 
-    .topActions{
+    .heroTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+    }
+
+    .heroActions{
       display:flex;
       justify-content:flex-end;
       align-items:center;
       gap:8px;
-      margin-bottom: 10px;
+      flex: 0 0 auto;
     }
 
     .iconBtn{
@@ -73,21 +80,10 @@
       flex: 0 0 auto;
     }
 
-    .refreshBtn{
-      width:auto;
-      max-width: min(100%, 260px);
-      padding: 10px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(18,112,145,0.22);
+    .refreshIconBtn{
+      border-color: rgba(18,112,145,0.22);
       background: linear-gradient(135deg, rgba(168,231,255,0.75), rgba(214,250,255,0.9));
-      color:#0f5978;
-      font-size: 13px;
-      font-weight: 900;
-      line-height: 1.25;
-      text-align:left;
-      cursor:pointer;
       box-shadow: 0 8px 20px rgba(15,89,120,0.12);
-      flex: 0 1 auto;
     }
 
     .hero{
@@ -104,6 +100,7 @@
       font-size: 30px;
       letter-spacing: .02em;
       font-weight: 800;
+      min-width:0;
     }
 
     .sub{
@@ -222,62 +219,60 @@
     }
 
     .habitRow{
-      display:flex;
+      display:grid;
+      grid-template-columns: auto minmax(0, 1fr) auto auto;
       align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .datePill{
-      padding: 7px 10px;
+      padding: 6px 8px;
       border-radius: 999px;
       border: 1px dashed rgba(0,0,0,0.18);
       background: rgba(255,246,166,0.90);
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
-      min-width: 72px;
+      min-width: 58px;
       text-align:center;
       color: #e68e00;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       flex: 0 0 auto;
     }
 
     .habitName{
-      flex:1 1 120px;
       min-width:0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       color:#000;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
     }
 
     .dayCount{
-      width: 180px;
-      max-width: 100%;
-      text-align: left;
+      max-width: 120px;
+      text-align: right;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       font-variant-numeric: tabular-nums;
       color: #1445cb;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 700;
-      flex: 1 1 150px;
     }
 
     .deleteSquare{
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 12px;
       border: 1px solid rgba(0,0,0,0.14);
       background: rgba(243, 142, 142, 0.6);
-      font-size: 20px;
+      font-size: 18px;
       line-height: 1;
       cursor: pointer;
       font-weight: 900;
       color: rgba(73, 17, 17, 0.6);
-      flex: 0 0 auto;
     }
 
     .deleteSquare:active{
@@ -401,28 +396,53 @@
         padding: 12px 10px 32px;
       }
 
-      .refreshBtn{
-        max-width: 220px;
-        font-size: 12px;
+      h1{
+        font-size: 26px;
+      }
+
+      .iconBtn{
+        width:40px;
+        height:40px;
+      }
+
+      .habitRow{
+        gap: 6px;
+      }
+
+      .datePill{
+        min-width: 52px;
+        padding: 5px 6px;
+        font-size: 14px;
+      }
+
+      .habitName{
+        font-size: 15px;
       }
 
       .dayCount{
-        width:auto;
-        flex-basis: 100%;
+        max-width: 104px;
+        font-size: 13px;
+      }
+
+      .deleteSquare{
+        width:30px;
+        height:30px;
+        font-size:16px;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="topActions">
-      <button id="settingsBtn" class="iconBtn" type="button" aria-label="バックアップ設定を開く">⚙️</button>
-      <button id="refreshBtn" class="refreshBtn" type="button" aria-label="最新版に更新（キャッシュ削除）">🔄 最新版に更新（キャッシュ削除）</button>
-    </div>
-
     <div class="hero">
-      <h1>習慣トラッカー</h1>
-      <p class="sub">開始日からの継続日数を記録するシンプルなアプリ</p>
+      <div class="heroTop">
+        <h1>習慣トラッカー</h1>
+        <div class="heroActions">
+          <button id="settingsBtn" class="iconBtn" type="button" aria-label="バックアップ設定を開く">⚙️</button>
+          <button id="refreshBtn" class="iconBtn refreshIconBtn" type="button" aria-label="最新版に更新（キャッシュ削除）">🔄</button>
+        </div>
+      </div>
+      <p class="sub">小さく始めて未来を育てる 🍃✨</p>
     </div>
 
     <div class="panel">
@@ -746,7 +766,7 @@
 
         const d = daysFromStart(h.startDate);
         const { months, days } = monthDayFromStart(h.startDate);
-        const dayText = d >= 1 ? `${d}日目 (${months}か月 ${days}日)` : "未開始";
+        const dayText = d >= 1 ? `${d}日目(${months}ヶ月${days}日)` : "未開始";
 
         item.innerHTML = `
           <div class="habitRow">
