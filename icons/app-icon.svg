@@ -6,7 +6,7 @@
       <stop offset="0%" stop-color="#f9f0d8" />
       <stop offset="64%" stop-color="#f1e1bf" />
       <stop offset="86%" stop-color="#e4c39c" />
-      <stop offset="100%" stop-color="#d7ae85" />
+      <stop offset="100%" stop-color="#ed8c1d" />
     </radialGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#bg)" />
@@ -18,6 +18,6 @@
     font-family="'Hiragino Maru Gothic ProN', 'HGMaruGothicMPRO', 'Hiragino Sans', sans-serif"
     font-size="623"
     font-weight="700"
-    fill="#8f5a4b"
+    fill="#ab4216"
   >&#28783;</text>
 </svg>
