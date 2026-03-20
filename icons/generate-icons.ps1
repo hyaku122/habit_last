@@ -8,15 +8,16 @@ $canvasSize = 1024
 $targetGlyphRatio = 0.565
 $baseEmSize = 580.0
 $glyph = [string][char]0x706F
-$glyphColor = [System.Drawing.Color]::FromArgb(255, 82, 77, 84)
-$skyColor = [System.Drawing.Color]::FromArgb(255, 217, 238, 251)
-$lampColor = [System.Drawing.Color]::FromArgb(255, 255, 248, 240)
+$fontStyle = [System.Drawing.FontStyle]::Bold
+$glyphColor = [System.Drawing.Color]::FromArgb(255, 90, 64, 53)
+$skyColor = [System.Drawing.Color]::FromArgb(255, 244, 220, 205)
+$lampColor = [System.Drawing.Color]::FromArgb(255, 248, 239, 207)
 $opticalOffsetY = -6.0
 $preferredFamilies = @(
-  "Yu Mincho",
-  "BIZ UDMincho Medium",
-  "HGPMinchoB",
-  "MS Mincho"
+  "HGMaruGothicMPRO",
+  "Yu Gothic UI Semibold",
+  "Yu Gothic UI",
+  "MS UI Gothic"
 )
 
 function Get-FontFamilyName {
@@ -29,7 +30,7 @@ function Get-FontFamilyName {
     }
   }
 
-  throw "A usable Japanese Mincho font was not found."
+  throw "A usable rounded Japanese Gothic font was not found."
 }
 
 function New-GlyphPath {
@@ -43,7 +44,7 @@ function New-GlyphPath {
   $path.AddString(
     $glyph,
     $FontFamily,
-    [int][System.Drawing.FontStyle]::Regular,
+    [int]$fontStyle,
     $EmSize,
     [System.Drawing.PointF]::new(0, 0),
     $format

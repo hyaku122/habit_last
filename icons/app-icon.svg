@@ -1,10 +1,10 @@
 <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Suminohi app icon</title>
-  <desc id="desc">Pale sky blue to warm lamp-white gradient background with a single centered kanji.</desc>
+  <desc id="desc">Milky apricot to pale honey gradient background with a single centered kanji.</desc>
   <defs>
     <linearGradient id="bg" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#d9eefb" />
-      <stop offset="100%" stop-color="#fff8f0" />
+      <stop offset="0%" stop-color="#f4dccd" />
+      <stop offset="100%" stop-color="#f8efcf" />
     </linearGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#bg)" />
@@ -13,8 +13,9 @@
     y="520"
     text-anchor="middle"
     dominant-baseline="central"
-    font-family="'Yu Mincho', 'BIZ UDMincho Medium', 'HGPMinchoB', 'MS Mincho', serif"
-    font-size="632"
-    fill="#524d54"
+    font-family="'Hiragino Maru Gothic ProN', 'HGMaruGothicMPRO', 'Hiragino Sans', sans-serif"
+    font-size="623"
+    font-weight="700"
+    fill="#5a4035"
   >&#28783;</text>
 </svg>
