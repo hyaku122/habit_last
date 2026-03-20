@@ -11,8 +11,6 @@ $glyph = [string][char]0x706F
 $fontStyle = [System.Drawing.FontStyle]::Bold
 $glyphColor = [System.Drawing.Color]::FromArgb(255, 143, 90, 75)
 $outerApricotColor = [System.Drawing.Color]::FromArgb(255, 199, 120, 82)
-$midApricotColor = [System.Drawing.Color]::FromArgb(255, 222, 174, 138)
-$midHoneyColor = [System.Drawing.Color]::FromArgb(255, 241, 221, 184)
 $centerHoneyColor = [System.Drawing.Color]::FromArgb(255, 249, 240, 216)
 $opticalOffsetY = -6.0
 $preferredFamilies = @(
@@ -111,26 +109,16 @@ try {
 
         $bgPath = New-Object System.Drawing.Drawing2D.GraphicsPath
         try {
-          $bgPath.AddRectangle([System.Drawing.Rectangle]::new(0, 0, $canvasSize, $canvasSize))
+          $bgPath.AddEllipse(
+            [System.Drawing.Rectangle]::new(0, 0, $canvasSize, $canvasSize)
+          )
           $bgBrush = New-Object System.Drawing.Drawing2D.PathGradientBrush($bgPath)
           try {
             $bgBrush.CenterPoint = [System.Drawing.PointF]::new($canvasSize / 2.0, $canvasSize / 2.0)
             $bgBrush.CenterColor = $centerHoneyColor
             $bgBrush.SurroundColors = @(
-              $outerApricotColor,
-              $outerApricotColor,
-              $outerApricotColor,
               $outerApricotColor
             )
-            $colorBlend = New-Object System.Drawing.Drawing2D.ColorBlend
-            $colorBlend.Colors = @(
-              $centerHoneyColor,
-              $midHoneyColor,
-              $midApricotColor,
-              $outerApricotColor
-            )
-              $colorBlend.Positions = @(0.0, 0.42, 0.76, 1.0)
-            $bgBrush.InterpolationColors = $colorBlend
             $graphics.FillRectangle($bgBrush, 0, 0, $canvasSize, $canvasSize)
           }
           finally {
