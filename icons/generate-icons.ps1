@@ -9,9 +9,11 @@ $targetGlyphRatio = 0.565
 $baseEmSize = 580.0
 $glyph = [string][char]0x706F
 $fontStyle = [System.Drawing.FontStyle]::Bold
-$glyphColor = [System.Drawing.Color]::FromArgb(255, 154, 95, 77)
-$outerApricotColor = [System.Drawing.Color]::FromArgb(255, 215, 135, 89)
-$centerHoneyColor = [System.Drawing.Color]::FromArgb(255, 248, 239, 207)
+$glyphColor = [System.Drawing.Color]::FromArgb(255, 143, 90, 75)
+$outerApricotColor = [System.Drawing.Color]::FromArgb(255, 212, 154, 118)
+$midApricotColor = [System.Drawing.Color]::FromArgb(255, 227, 190, 160)
+$midHoneyColor = [System.Drawing.Color]::FromArgb(255, 239, 219, 183)
+$centerHoneyColor = [System.Drawing.Color]::FromArgb(255, 244, 232, 199)
 $opticalOffsetY = -6.0
 $preferredFamilies = @(
   "HGMaruGothicMPRO",
@@ -120,7 +122,15 @@ try {
               $outerApricotColor,
               $outerApricotColor
             )
-            $bgBrush.SetSigmaBellShape(0.48, 1.0)
+            $colorBlend = New-Object System.Drawing.Drawing2D.ColorBlend
+            $colorBlend.Colors = @(
+              $centerHoneyColor,
+              $midHoneyColor,
+              $midApricotColor,
+              $outerApricotColor
+            )
+            $colorBlend.Positions = @(0.0, 0.46, 0.78, 1.0)
+            $bgBrush.InterpolationColors = $colorBlend
             $graphics.FillRectangle($bgBrush, 0, 0, $canvasSize, $canvasSize)
           }
           finally {
