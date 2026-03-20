@@ -1,8 +1,12 @@
-const CACHE_NAME = "habit-last-v1";
+const CACHE_NAME = "habit-last-v2";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./icons/app-icon.svg",
+  "./icons/suminohi-icon-192.png",
+  "./icons/suminohi-icon-512.png",
+  "./icons/suminohi-icon-180.png",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-180.png"
