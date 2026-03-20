@@ -10,7 +10,7 @@ $baseEmSize = 580.0
 $glyph = [string][char]0x706F
 $fontStyle = [System.Drawing.FontStyle]::Bold
 $glyphColor = [System.Drawing.Color]::FromArgb(255, 143, 90, 75)
-$outerApricotColor = [System.Drawing.Color]::FromArgb(255, 199, 120, 82)
+$outerApricotColor = [System.Drawing.Color]::FromArgb(255, 215, 174, 133)
 $centerHoneyColor = [System.Drawing.Color]::FromArgb(255, 249, 240, 216)
 $opticalOffsetY = -6.0
 $preferredFamilies = @(
@@ -119,6 +119,7 @@ try {
             $bgBrush.SurroundColors = @(
               $outerApricotColor
             )
+            $bgBrush.FocusScales = [System.Drawing.PointF]::new(0.24, 0.24)
             $graphics.FillRectangle($bgBrush, 0, 0, $canvasSize, $canvasSize)
           }
           finally {

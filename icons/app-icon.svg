@@ -4,9 +4,9 @@
   <defs>
     <radialGradient id="bg" cx="50%" cy="50%" r="84%">
       <stop offset="0%" stop-color="#f9f0d8" />
-      <stop offset="42%" stop-color="#f1ddb8" />
-      <stop offset="76%" stop-color="#deae8a" />
-      <stop offset="100%" stop-color="#c77852" />
+      <stop offset="64%" stop-color="#f1e1bf" />
+      <stop offset="86%" stop-color="#e4c39c" />
+      <stop offset="100%" stop-color="#d7ae85" />
     </radialGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#bg)" />
