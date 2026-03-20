@@ -10,8 +10,8 @@ $baseEmSize = 580.0
 $glyph = [string][char]0x706F
 $fontStyle = [System.Drawing.FontStyle]::Bold
 $glyphColor = [System.Drawing.Color]::FromArgb(255, 154, 95, 77)
-$skyColor = [System.Drawing.Color]::FromArgb(255, 223, 155, 112)
-$lampColor = [System.Drawing.Color]::FromArgb(255, 248, 239, 207)
+$outerApricotColor = [System.Drawing.Color]::FromArgb(255, 215, 135, 89)
+$centerHoneyColor = [System.Drawing.Color]::FromArgb(255, 248, 239, 207)
 $opticalOffsetY = -6.0
 $preferredFamilies = @(
   "HGMaruGothicMPRO",
@@ -105,19 +105,30 @@ try {
         $graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
         $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
         $graphics.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
-        $graphics.Clear($skyColor)
+        $graphics.Clear($outerApricotColor)
 
-        $bgBrush = New-Object System.Drawing.Drawing2D.LinearGradientBrush(
-          [System.Drawing.PointF]::new(0, $canvasSize),
-          [System.Drawing.PointF]::new($canvasSize, 0),
-          $skyColor,
-          $lampColor
-        )
+        $bgPath = New-Object System.Drawing.Drawing2D.GraphicsPath
         try {
-          $graphics.FillRectangle($bgBrush, 0, 0, $canvasSize, $canvasSize)
+          $bgPath.AddRectangle([System.Drawing.Rectangle]::new(0, 0, $canvasSize, $canvasSize))
+          $bgBrush = New-Object System.Drawing.Drawing2D.PathGradientBrush($bgPath)
+          try {
+            $bgBrush.CenterPoint = [System.Drawing.PointF]::new($canvasSize / 2.0, $canvasSize / 2.0)
+            $bgBrush.CenterColor = $centerHoneyColor
+            $bgBrush.SurroundColors = @(
+              $outerApricotColor,
+              $outerApricotColor,
+              $outerApricotColor,
+              $outerApricotColor
+            )
+            $bgBrush.SetSigmaBellShape(0.48, 1.0)
+            $graphics.FillRectangle($bgBrush, 0, 0, $canvasSize, $canvasSize)
+          }
+          finally {
+            $bgBrush.Dispose()
+          }
         }
         finally {
-          $bgBrush.Dispose()
+          $bgPath.Dispose()
         }
 
         $textBrush = New-Object System.Drawing.SolidBrush($glyphColor)
