@@ -224,7 +224,7 @@
     }
 
     .yearTotal{
-      color: rgba(41,120,128,0.82);
+      color: rgba(86,159,166,0.92);
       font-size: 14px;
       font-weight: 800;
       letter-spacing: 0;
@@ -864,7 +864,7 @@
           yearLabelEl.textContent = `${currentYear}年`;
           const yearTotalEl = document.createElement("span");
           yearTotalEl.className = "yearTotal";
-          yearTotalEl.textContent = `${yearCounts[currentYear]}個`;
+          yearTotalEl.textContent = `${yearCounts[currentYear]}habit`;
           yEl.append(yearLabelEl, yearTotalEl);
           listEl.appendChild(yEl);
         }
