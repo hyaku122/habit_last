@@ -214,9 +214,20 @@
 
     .yearHeader{
       margin: 14px 2px 2px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
       font-weight: 900;
       color: rgba(0,0,0,0.7);
       letter-spacing: .03em;
+    }
+
+    .yearTotal{
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0;
     }
 
     .habitItem{
@@ -835,6 +846,11 @@
         if(d !== 0) return d;
         return String(a.name).localeCompare(String(b.name), "ja");
       });
+      const yearCounts = habits.reduce((counts, habit) => {
+        const year = getYear(habit.startDate);
+        counts[year] = (counts[year] ?? 0) + 1;
+        return counts;
+      }, {});
 
       let currentYear = null;
 
@@ -844,7 +860,12 @@
           currentYear = y;
           const yEl = document.createElement("div");
           yEl.className = "yearHeader";
-          yEl.textContent = `${currentYear}年`;
+          const yearLabelEl = document.createElement("span");
+          yearLabelEl.textContent = `${currentYear}年`;
+          const yearTotalEl = document.createElement("span");
+          yearTotalEl.className = "yearTotal";
+          yearTotalEl.textContent = `${yearCounts[currentYear]}個`;
+          yEl.append(yearLabelEl, yearTotalEl);
           listEl.appendChild(yEl);
         }
 
