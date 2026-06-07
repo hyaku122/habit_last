@@ -216,18 +216,20 @@
       margin: 14px 2px 2px;
       display: flex;
       align-items: baseline;
-      justify-content: flex-start;
-      gap: 2em;
+      justify-content: space-between;
+      gap: 12px;
       font-weight: 900;
+      font-size: 16px;
       color: rgba(0,0,0,0.7);
       letter-spacing: .03em;
     }
 
     .yearTotal{
-      color: rgba(86,159,166,0.92);
-      font-size: 14px;
-      font-weight: 800;
+      color: #ff5f9f;
+      font-size: 22px;
+      font-weight: 900;
       letter-spacing: 0;
+      white-space: nowrap;
     }
 
     .habitItem{
@@ -864,7 +866,7 @@
           yearLabelEl.textContent = `${currentYear}年`;
           const yearTotalEl = document.createElement("span");
           yearTotalEl.className = "yearTotal";
-          yearTotalEl.textContent = `${yearCounts[currentYear]}habit`;
+          yearTotalEl.textContent = `Total　${yearCounts[currentYear]}habit`;
           yEl.append(yearLabelEl, yearTotalEl);
           listEl.appendChild(yEl);
         }
