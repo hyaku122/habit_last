@@ -874,10 +874,13 @@
           const yearTotalEl = document.createElement("span");
           yearTotalEl.className = "yearTotal";
           yearTotalEl.textContent = `${yearCounts[currentYear]}habit`;
-          const totalHabitsEl = document.createElement("span");
-          totalHabitsEl.className = "totalHabits";
-          totalHabitsEl.textContent = `Total　${habits.length}habit`;
-          yEl.append(yearLabelEl, yearTotalEl, totalHabitsEl);
+          yEl.append(yearLabelEl, yearTotalEl);
+          if(currentYear === 2025){
+            const totalHabitsEl = document.createElement("span");
+            totalHabitsEl.className = "totalHabits";
+            totalHabitsEl.textContent = `Total ${habits.length}habit`;
+            yEl.appendChild(totalHabitsEl);
+          }
           listEl.appendChild(yEl);
         }
 
